@@ -23,9 +23,7 @@ import { Sidebar } from "../components/Sidebar";
 import { Plus, PencilSimple, Trash, Tag, FilePdf } from "phosphor-react";
 import { Pagination } from "../components/Pagination";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import { TaskType, TaskModal } from "../components/modais/TaskModal";
-import withReactContent from "sweetalert2-react-content";
+
 import Task from "../components/card";
 
 import axios from "axios";
@@ -36,24 +34,11 @@ const tasks = data.data;
 const dataTypes = await axios.get("http://localhost:3000/types");
 const types = dataTypes.data;
 
-interface TaskListProps {
-  data: TaskType
-}
-
-export function TaskList({data} : TaskListProps) {
+export function TaskList() {
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
-
-  const MySwal = withReactContent(Swal);
-  const showSwal = () => {
-    MySwal.fire({
-      title: <strong>Criar Tarefa</strong>,
-      html: <TaskModal closeModal={MySwal.close} taskData={data} />,
-      showConfirmButton: false,
-    }).then(() => window.location.reload());
-  };
 
   return (
     <Flex direction="column" h="100vh">
@@ -84,14 +69,13 @@ export function TaskList({data} : TaskListProps) {
               Tarefas
             </Heading>
 
-            <Link to="#">
+            <Link to="create">
               <Button
                 as="a"
                 size="sm"
                 fontSize="sm"
                 colorScheme="blue"
-                leftIcon={<Icon as={Plus} fontSize={16}  />}
-                onClick={showSwal}
+                leftIcon={<Icon as={Plus} fontSize={16} />}
               >
                 Nova tarefa
               </Button>

@@ -1,18 +1,22 @@
 import {
   Heading,
+  Avatar,
   Box,
   Center,
+  Image,
+  Flex,
   Text,
   Stack,
   Button,
   useColorModeValue,
+  HStack,
+  IconButton,
   Icon,
   SimpleGrid,
+  Textarea,
 } from "@chakra-ui/react";
 import { Envelope, PencilSimple, Tag, Trash } from "phosphor-react";
-import Swal from "sweetalert2";
-import { TaskType, TaskModal } from "../modais/TaskModal";
-import withReactContent from "sweetalert2-react-content";
+
 interface TaskProps {
   color: string;
   description: string;
@@ -20,7 +24,6 @@ interface TaskProps {
   type: string;
   create: string;
   expire: string;
-  data: TaskType;
 }
 
 export default function Task({
@@ -29,21 +32,12 @@ export default function Task({
   priority,
   type,
   create,
-  expire,
-  data,
+  expire
 }: TaskProps) {
   let isGreen: any;
   if (color == "green") {
     isGreen = true;
   }
-  const MySwal = withReactContent(Swal);
-  const showSwal = () => {
-    MySwal.fire({
-      title: <strong>Editar Tarefa</strong>,
-      html: <TaskModal closeModal={MySwal.close} taskData={data} />,
-      showConfirmButton: false,
-    }).then(() => window.location.reload());
-  };
   return (
     <Center py={6}>
       <Box
@@ -96,7 +90,6 @@ export default function Task({
               fontSize="sm"
               colorScheme="pink"
               leftIcon={<Icon as={PencilSimple} fontSize={16} />}
-              onClick={showSwal}
             >
               Editar
             </Button>
