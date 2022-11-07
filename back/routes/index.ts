@@ -9,6 +9,4 @@ router.use(cors());
 router.use(routerTask);
 router.use(routerType);
 
-router.use('/sendMail', )
-
 export default router;
