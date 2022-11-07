@@ -5,18 +5,22 @@ import {
   InputProps as ChakraInputProps,
 } from "@chakra-ui/react";
 
+import { useFormContext } from "react-hook-form";
+
 interface InputProps extends ChakraInputProps {
   name: string;
   label?: string;
+  data: string | number
+  id: string;
 }
 
-export function Input({ name, label, ...rest }: InputProps) {
+export function Input({ name, label, data,id, ...rest }: InputProps) {
+  const { register } = useFormContext();
   return (
     <FormControl>
       {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
 
       <ChakraInput
-        name={name}
         id={name}
         bgColor="gray.900"
         variant="filled"
@@ -24,6 +28,8 @@ export function Input({ name, label, ...rest }: InputProps) {
         focusBorderColor="blue.400"
         _hover={{ bgColor: "gray.900" }}
         {...rest}
+        {...register(id)}
+        data={data}
       />
     </FormControl>
   );
