@@ -24,15 +24,22 @@ import { Plus, PencilSimple, Trash, Tag, FilePdf } from "phosphor-react";
 import { Pagination } from "../components/Pagination";
 import { Link } from "react-router-dom";
 
-import useUserEditModal from "../components/Modais/UserEditModal";
 import Task from "../components/card";
 
+import axios from "axios";
+
+const data = await axios.get("http://localhost:3000/tasks");
+const tasks = data.data;
+
+const dataTypes = await axios.get("http://localhost:3000/types");
+const types = dataTypes.data;
+
 export function TaskList() {
-  const { onOpen, UserEditModal } = useUserEditModal();
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
+
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -75,13 +82,38 @@ export function TaskList() {
             </Link>
           </Flex>
           <SimpleGrid columns={3} spacing={10}>
-            <Task color="blue"/>
-            <Task color="orange"/>
-            <Task color="green"/>
+            {tasks.map((task: any) => {
+              console.log(types);
+              let cor = "";
+              if (task.situation == "done") {
+                cor = "green";
+              } else if (task.situation == "doing") {
+                cor = "orange";
+              } else if (task.situation == "pending") {
+                cor = "blue";
+              }
+              let typeName = "";
+              types.map((type: any) => {
+                console.log(task);
+                if (type.id == task.TypeId) {
+                  typeName = type.description;
+                }
+              });
+
+              return (
+                <Task
+                  color={cor}
+                  description={task.description}
+                  type={typeName}
+                  priority={task.priority}
+                  create={task.create}
+                  expire={task.expire}
+                />
+              );
+            })}
           </SimpleGrid>
         </Box>
       </Flex>
-      {UserEditModal}
     </Flex>
   );
 }

@@ -17,15 +17,24 @@ import {
 } from "@chakra-ui/react";
 import { Envelope, PencilSimple, Tag, Trash } from "phosphor-react";
 
-import useUserEditModal from "../modal/index";
-
 interface TaskProps {
   color: string;
+  description: string;
+  priority: string;
+  type: string;
+  create: string;
+  expire: string;
 }
 
-export default function Task({ color = "blue" }: TaskProps) {
-  const { onOpen, UserEditModal } = useUserEditModal();
-  let isGreen;
+export default function Task({
+  color = "blue",
+  description,
+  priority,
+  type,
+  create,
+  expire
+}: TaskProps) {
+  let isGreen: any;
   if (color == "green") {
     isGreen = true;
   }
@@ -43,29 +52,28 @@ export default function Task({ color = "blue" }: TaskProps) {
 
         <Box p={6}>
           <Stack spacing={0} align={"center"} mb={5}>
-            <Heading
-              fontSize={"2xl"}
-              fontWeight={500}
-              fontFamily={"body"}
-              color="black"
-            >
-              Título Tarefa
-            </Heading>
-            <Text color={"gray.500"}>Prioridade</Text>
-            <Text color={"gray.500"}>Type</Text>
+            <Heading></Heading>
+            <Text color={"gray.500"}>Tipo: {type}</Text>
+            <Text color={"gray.500"}>Prioridade: {priority}</Text>
           </Stack>
 
           <Stack direction={"row"} justify={"center"} spacing={6}>
             <Stack spacing={0} align={"center"}>
-              <Text fontSize={"sm"} color={"gray.500"} mb="10">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                consequatur magnam animi distinctio, repudiandae facilis iure
-                sint ipsam dignissimos nisi amet minima. Reiciendis
-                necessitatibus at exercitationem voluptatum rem esse architecto.
+              <Text
+                color={"gray.800"}
+                mb="10"
+                fontSize={"2xl"}
+                fontWeight={500}
+                fontFamily={"body"}
+              >
+                {description}
               </Text>
             </Stack>
           </Stack>
-
+          <Box>
+            <Text color={"gray.500"}>Criação: {create}</Text>
+            <Text color={"gray.500"}>Validade: {expire}</Text>
+          </Box>
           <SimpleGrid columns={2} row={2} spacing={2}>
             <Button
               size="sm"
@@ -82,7 +90,6 @@ export default function Task({ color = "blue" }: TaskProps) {
               fontSize="sm"
               colorScheme="pink"
               leftIcon={<Icon as={PencilSimple} fontSize={16} />}
-              onClick={onOpen}
             >
               Editar
             </Button>
@@ -106,6 +113,5 @@ export default function Task({ color = "blue" }: TaskProps) {
         </Box>
       </Box>
     </Center>
-    
   );
 }
