@@ -19,7 +19,7 @@ import { useMemo } from "react";
 import { Input } from "../Input";
 import axios from "axios";
 
-const dataTypes = await axios.get("http://localhost:3000/types");
+const dataTypes = await axios.get("http://localhost:3001/types");
 const types = dataTypes.data;
 
 export default function TaskEdit() {
@@ -49,12 +49,13 @@ export default function TaskEdit() {
                         gap="8"
                       >
                         <GridItem colSpan={7}>
-                          <Input name="description" label="Descrição" />
+                          <Input name="description" id="description" label="Descrição" />
                         </GridItem>
                         <GridItem colSpan={1}>
                           <label htmlFor="">Prioridade</label>
                           <Select
                             name="priority"
+                            id="priority"
                             bg="gray.800"
                             color="gray.600"
                             mt="3"
@@ -77,19 +78,23 @@ export default function TaskEdit() {
                         <GridItem colSpan={2}>
                           <label htmlFor="">Situação</label>
                           <Select
-                            name="priority"
+                            name="situation"
+                            id="situation"
                             bg="gray.800"
                             color="gray.600"
                             mt="3"
                           >
-                            <option value="#">Pendente</option>
-                            <option value="#">Fazendo</option>
+                            <option value="canceled">Cancelado</option>
+                            <option value="pending">Pendente</option>
+                            <option value="doing">Fazendo</option>
+                            <option value="done">Concluído</option>
                           </Select>
                         </GridItem>
                         <GridItem colSpan={2}>
                           <label htmlFor="">Tipo</label>
                           <Select
-                            name="priority"
+                            name="type"
+                            id="type"
                             bg="gray.800"
                             color="gray.600"
                             mt="3"
@@ -106,6 +111,7 @@ export default function TaskEdit() {
                         <GridItem colSpan={2}>
                           <Input
                             name="create"
+                            id="create"
                             type="datetime-local"
                             label="Data de Criação"
                           />
@@ -113,6 +119,7 @@ export default function TaskEdit() {
                         <GridItem colSpan={2}>
                           <Input
                             name="expire"
+                            id="expire"
                             type="datetime-local"
                             label="Data de Vencimento"
                           />
@@ -128,7 +135,7 @@ export default function TaskEdit() {
                     </Link>
                     <Button
                       colorScheme="blue"
-                      // onClick={handleSubmit(handleCrateNewTask)}
+                      onClick={submit}
                     >
                       Salvar
                     </Button>
@@ -147,4 +154,19 @@ export default function TaskEdit() {
     onClose,
     TaskEditModal,
   };
+}
+
+const submit = async () => {
+  try {
+    await axios.post('http://localhost:3001/tasks', {
+      description: (document.getElementById('description') as HTMLInputElement).value,
+      priority: (document.getElementById('priority') as HTMLInputElement).value,
+      situation: (document.getElementById('situation') as HTMLInputElement).value,
+      TypeId: (document.getElementById('type') as HTMLInputElement).value,
+      create: (document.getElementById('create') as HTMLInputElement).value,
+      expire: (document.getElementById('expire') as HTMLInputElement).value
+    });
+  } catch (err) {
+    alert("Error creating");
+  }
 }

@@ -1,37 +1,23 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   Heading,
   Icon,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Text,
-  HStack,
   theme,
   useBreakpointValue,
-  IconButton,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { Header } from "../components/Header";
-import { Sidebar } from "../components/Sidebar";
-import { Plus, PencilSimple, Trash, Tag, FilePdf } from "phosphor-react";
-import { Link } from "react-router-dom";
+import { Plus, FilePdf } from "phosphor-react";
 import useTaskEditModal from "../components/modal/TaskEditModal";
-
 import Task from "../components/card";
-
 import axios from "axios";
 
-const data = await axios.get("http://localhost:3000/tasks");
+const data = await axios.get("http://localhost:3001/tasks");
 const tasks = data.data;
 
-const dataTypes = await axios.get("http://localhost:3000/types");
+const dataTypes = await axios.get("http://localhost:3001/types");
 const types = dataTypes.data;
 
 export function TaskList() {
@@ -44,7 +30,6 @@ export function TaskList() {
     <Flex direction="column" h="100vh">
       <Header />
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
-        <Sidebar />
         <Box
           flex="1"
           borderRadius={8}
@@ -68,49 +53,65 @@ export function TaskList() {
             <Heading size="lg" fontWeight="normal">
               Tarefas
             </Heading>
-
-            <Button
-              as="a"
-              size="sm"
-              fontSize="sm"
-              colorScheme="blue"
-              leftIcon={<Icon as={Plus} fontSize={16} />}
-              onClick={onOpen}
-            >
-              Nova tarefa
-            </Button>
+            <Flex justify="flex-end" gap={8}>
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="blue"
+                leftIcon={<Icon as={Plus} fontSize={16} />}
+                onClick={onOpen}
+              >
+                Nova tarefa
+              </Button>
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="green"
+                leftIcon={<Icon as={FilePdf} fontSize={16} />}
+              >
+                Gerar PDF
+              </Button>
+            </Flex>
           </Flex>
-          <SimpleGrid columns={3} spacing={10}>
-            {tasks.map((task: any) => {
-              console.log(types);
-              let cor = "";
-              if (task.situation == "done") {
-                cor = "green";
-              } else if (task.situation == "doing") {
-                cor = "orange";
-              } else if (task.situation == "pending") {
-                cor = "blue";
-              }
-              let typeName = "";
-              types.map((type: any) => {
-                console.log(task);
-                if (type.id == task.TypeId) {
-                  typeName = type.description;
+          <Flex>
+            <SimpleGrid columns={4} spacing={10}>
+              {tasks.map((task: any) => {
+                let color = "";
+                if (task.situation == "done") {
+                  color = "green";
                 }
-              });
+                if (task.situation == "doing") {
+                  color = "orange";
+                }
+                if (task.situation == "pending") {
+                  color = "blue";
+                }
+                if (task.situation == "canceled") {
+                  color = "red";
+                }
+                let typeName = "";
+                types.map((type: any) => {
+                  if (type.id == task.TypeId) {
+                    typeName = type.description;
+                  }
+                });
 
-              return (
-                <Task
-                  color={cor}
-                  description={task.description}
-                  type={typeName}
-                  priority={task.priority}
-                  create={task.create}
-                  expire={task.expire}
-                />
-              );
-            })}
-          </SimpleGrid>
+                return (
+                  <Task
+                    color={color}
+                    description={task.description}
+                    type={typeName}
+                    priority={task.priority}
+                    create={task.create}
+                    expire={task.expire}
+                  />
+                );
+              })}
+            </SimpleGrid>
+            
+          </Flex>
         </Box>
       </Flex>
       {TaskEditModal}

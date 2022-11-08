@@ -5,7 +5,7 @@ class TaskController {
 
   index = async (req: Request, res: Response) => {
     const params = req.query;
-    const limit: number = parseInt(params.limit as string) || 10;
+    const limit: number = parseInt(params.limit as string) || 100;
     const page: number = parseInt(params.page as string) || 1;
     const offset: number = (page - 1) * limit;
     const sort: any = params.sort || 'id';

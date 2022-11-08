@@ -14,7 +14,6 @@ import {
 import { Link } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
-import { Sidebar } from "../components/Sidebar";
 
 export function TypeCreate() {
   return (
@@ -22,7 +21,6 @@ export function TypeCreate() {
       <Header />
 
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
-        <Sidebar />
         <Box flex="1" borderRadius={8} bg="gray.800" p={["6", "8"]}>
           <Heading size="lg" fontWeight="normal">
             Criar Tipo
