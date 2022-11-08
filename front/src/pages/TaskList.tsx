@@ -83,7 +83,6 @@ export function TaskList() {
           </Flex>
           <SimpleGrid columns={3} spacing={10}>
             {tasks.map((task: any) => {
-              console.log(types);
               let cor = "";
               if (task.situation == "done") {
                 cor = "green";
@@ -94,12 +93,10 @@ export function TaskList() {
               }
               let typeName = "";
               types.map((type: any) => {
-                console.log(task);
                 if (type.id == task.TypeId) {
                   typeName = type.description;
                 }
               });
-
               return (
                 <Task
                   color={cor}
