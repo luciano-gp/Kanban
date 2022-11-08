@@ -9,6 +9,7 @@ import {
   Icon,
   SimpleGrid,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { Envelope, PencilSimple, Tag, Trash } from "phosphor-react";
 
 interface TaskProps {
@@ -18,6 +19,7 @@ interface TaskProps {
   type: string;
   create: string;
   expire: string;
+  id: number;
 }
 
 export default function Task({
@@ -26,7 +28,8 @@ export default function Task({
   priority,
   type,
   create,
-  expire
+  expire,
+  id,
 }: TaskProps) {
   let isGreen: any;
   if (color == "green") {
@@ -92,6 +95,9 @@ export default function Task({
               fontSize="sm"
               colorScheme="red"
               leftIcon={<Icon as={Trash} fontSize={16} />}
+              onClick={() => {
+                deleteTask(id);
+              }}
             >
               Excluir
             </Button>
@@ -109,3 +115,7 @@ export default function Task({
     </Center>
   );
 }
+
+const deleteTask = (id: number) => {
+  axios.delete(`http://localhost:3001/tasks/${id}`);
+};

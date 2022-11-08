@@ -107,6 +107,7 @@ export function TaskList() {
                     priority={task.priority}
                     create={createDate[0]}
                     expire={expireDate[0]}
+                    id={task.id}
                   />
                 );
               })}
