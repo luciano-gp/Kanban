@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Header } from "../components/Header";
 import { Plus, FilePdf } from "phosphor-react";
-import useTaskEditModal from "../components/modal/TaskEditModal";
+import useTaskEditModal from "../components/Modal/TaskEditModal";
 import Task from "../components/card";
 import axios from "axios";
 
