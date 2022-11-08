@@ -21,8 +21,8 @@ import {
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Plus, PencilSimple, Trash, Tag, FilePdf } from "phosphor-react";
-import { Pagination } from "../components/Pagination";
 import { Link } from "react-router-dom";
+import useTaskEditModal from "../components/modal/TaskEditModal";
 
 import Task from "../components/card";
 
@@ -39,7 +39,7 @@ export function TaskList() {
     base: false,
     lg: true,
   });
-
+  const { onClose, onOpen, TaskEditModal } = useTaskEditModal();
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -69,20 +69,20 @@ export function TaskList() {
               Tarefas
             </Heading>
 
-            <Link to="create">
-              <Button
-                as="a"
-                size="sm"
-                fontSize="sm"
-                colorScheme="blue"
-                leftIcon={<Icon as={Plus} fontSize={16} />}
-              >
-                Nova tarefa
-              </Button>
-            </Link>
+            <Button
+              as="a"
+              size="sm"
+              fontSize="sm"
+              colorScheme="blue"
+              leftIcon={<Icon as={Plus} fontSize={16} />}
+              onClick={onOpen}
+            >
+              Nova tarefa
+            </Button>
           </Flex>
           <SimpleGrid columns={3} spacing={10}>
             {tasks.map((task: any) => {
+              console.log(types);
               let cor = "";
               if (task.situation == "done") {
                 cor = "green";
@@ -93,10 +93,12 @@ export function TaskList() {
               }
               let typeName = "";
               types.map((type: any) => {
+                console.log(task);
                 if (type.id == task.TypeId) {
                   typeName = type.description;
                 }
               });
+
               return (
                 <Task
                   color={cor}
@@ -111,6 +113,7 @@ export function TaskList() {
           </SimpleGrid>
         </Box>
       </Flex>
+      {TaskEditModal}
     </Flex>
   );
 }

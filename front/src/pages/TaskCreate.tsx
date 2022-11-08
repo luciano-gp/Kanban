@@ -17,10 +17,6 @@ import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Sidebar } from "../components/Sidebar";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { FormEvent, useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as zod from "zod";
 
 export function TaskCreate() {
   const methods = useForm;
@@ -71,7 +67,7 @@ export function TaskCreate() {
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                    <option value="5">5</option>
+                    <option value="5">5</option>  
                     <option value="6">6</option>
                     <option value="7">7</option>
                     <option value="8">8</option>

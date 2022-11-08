@@ -1,19 +1,13 @@
 import {
   Heading,
-  Avatar,
   Box,
   Center,
-  Image,
-  Flex,
   Text,
   Stack,
   Button,
   useColorModeValue,
-  HStack,
-  IconButton,
   Icon,
   SimpleGrid,
-  Textarea,
 } from "@chakra-ui/react";
 import { Envelope, PencilSimple, Tag, Trash } from "phosphor-react";
 
