@@ -3,16 +3,13 @@ import { theme } from "./styles/theme";
 
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "./Router";
-import { SidebarDrawerProvider } from "./components/contexts/SidebarDrawerContext";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <SidebarDrawerProvider>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </SidebarDrawerProvider>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </ChakraProvider>
   );
 }

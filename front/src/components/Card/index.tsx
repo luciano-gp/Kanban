@@ -33,35 +33,39 @@ export default function Task({
 }: TaskProps) {
   let isGreen: any;
   let isRed: any;
-  if (color == "green") {
+  if (color == "green.700") {
     isGreen = true;
   }
-  if (color == "red") {
+  if (color == "red.700") {
     isRed = true;
   }
   return (
-    <Center py={6}>
+    <Center py={6} className="cardTask">
       <Box
         maxW={"270px"}
         w={"full"}
-        bg={useColorModeValue("white", "gray.800")}
+        bg={useColorModeValue("gray.700", "white")}
         boxShadow={"2xl"}
         rounded={"md"}
         overflow={"hidden"}
       >
         <Box h="10" w={"full"} bgColor={color} objectFit={"cover"} />
 
-        <Box p={6}>
-          <Stack spacing={0} align={"center"} mb={5}>
+        <Box px={4} py={2}>
+          <Stack spacing={0} align={"left"} mb={5}>
             <Heading></Heading>
-            <Text color={"gray.500"}>Tipo: {type}</Text>
-            <Text color={"gray.500"}>Prioridade: {priority}</Text>
+            <Text fontSize="14" color={"gray.300"} className="cardTypes">
+              Tipo: {type}
+            </Text>
+            <Text fontSize="14" color={"gray.300"}>
+              Prioridade: {priority}
+            </Text>
           </Stack>
 
           <Stack direction={"row"} justify={"center"} spacing={6}>
             <Stack spacing={0} align={"center"}>
               <Text
-                color={"gray.800"}
+                color={"gray.200"}
                 mb="10"
                 fontSize={"2xl"}
                 fontWeight={500}
@@ -71,9 +75,13 @@ export default function Task({
               </Text>
             </Stack>
           </Stack>
-          <Box>
-            <Text color={"gray.500"}>Criação: {create}</Text>
-            <Text color={"gray.500"}>Validade: {expire}</Text>
+          <Box pb={1}>
+            <Text fontSize="12" color={"gray.300"}>
+              Criação: {create}
+            </Text>
+            <Text fontSize="12" color={"gray.300"}>
+              Validade: {expire}
+            </Text>
           </Box>
           <SimpleGrid columns={5} row={1} spacing={2}>
             <Button

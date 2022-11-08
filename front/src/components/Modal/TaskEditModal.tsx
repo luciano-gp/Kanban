@@ -26,7 +26,7 @@ export default function TaskEdit(id?: number) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const TaskEditModal = useMemo(() => {
     return (
-      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+      <Modal isOpen={isOpen} onClose={onClose} size="4xl">
         <ModalOverlay />
         <ModalContent>
           <ModalBody bg="gray.800">
@@ -48,7 +48,7 @@ export default function TaskEdit(id?: number) {
                         ]}
                         gap="8"
                       >
-                        <GridItem colSpan={7}>
+                        <GridItem colSpan={8}>
                           <Input
                             name="description"
                             id="description"
@@ -88,10 +88,10 @@ export default function TaskEdit(id?: number) {
                             color="gray.600"
                             mt="3"
                           >
-                            <option value="canceled">Cancelado</option>
                             <option value="pending">Pendente</option>
                             <option value="doing">Fazendo</option>
                             <option value="done">Concluído</option>
+                            <option value="canceled">Cancelado</option>
                           </Select>
                         </GridItem>
                         <GridItem colSpan={2}>
@@ -112,15 +112,7 @@ export default function TaskEdit(id?: number) {
                             })}
                           </Select>
                         </GridItem>
-                        <GridItem colSpan={2}>
-                          <Input
-                            name="create"
-                            id="create"
-                            type="datetime-local"
-                            label="Data de Criação"
-                          />
-                        </GridItem>
-                        <GridItem colSpan={2}>
+                        <GridItem colSpan={3}>
                           <Input
                             name="expire"
                             id="expire"
@@ -159,16 +151,16 @@ export default function TaskEdit(id?: number) {
 
 const submit = async () => {
   try {
-    await axios.post("http://localhost:3001/tasks", {
-      description: (document.getElementById("description") as HTMLInputElement)
-        .value,
+    const data = {
+      description: (document.getElementById("description") as HTMLInputElement).value,
       priority: (document.getElementById("priority") as HTMLInputElement).value,
-      situation: (document.getElementById("situation") as HTMLInputElement)
-        .value,
+      situation: (document.getElementById("situation") as HTMLInputElement).value,
       TypeId: (document.getElementById("type") as HTMLInputElement).value,
-      create: (document.getElementById("create") as HTMLInputElement).value,
+      create: new Date(),
       expire: (document.getElementById("expire") as HTMLInputElement).value,
-    });
+    }
+    console.log(data);
+    await axios.post("http://localhost:3001/tasks", data);
   } catch (err) {
     alert("Error creating");
   }

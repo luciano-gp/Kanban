@@ -7,12 +7,9 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { Logo } from "./Logo";
-import { SearchBox } from "./SearchBox";
-import { FilePdf, List } from "phosphor-react";
-import { SidebarDrawerContext } from "../contexts/SidebarDrawerContext";
+import { List } from "phosphor-react";
 
 export function Header() {
-  const { onOpen } = useContext(SidebarDrawerContext);
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -37,7 +34,6 @@ export function Header() {
           fontSize={24}
           variant="unstyled"
           mr="2"
-          onClick={onOpen}
         />
       )}
       <Logo />

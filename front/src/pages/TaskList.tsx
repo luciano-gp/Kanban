@@ -8,6 +8,8 @@ import {
   useBreakpointValue,
   SimpleGrid,
   Text,
+  Select,
+  filter,
 } from "@chakra-ui/react";
 import { Header } from "../components/Header";
 import { Plus, FilePdf } from "phosphor-react";
@@ -20,6 +22,21 @@ const tasks = data.data;
 
 const dataTypes = await axios.get("http://localhost:3001/types");
 const types = dataTypes.data;
+
+const cardColor = (task: string) => {
+  if (task == "done") {
+    return "green.700";
+  }
+  if (task == "doing") {
+    return "yellow.700";
+  }
+  if (task == "pending") {
+    return "blue.700";
+  }
+  if (task == "canceled") {
+    return "red.700";
+  }
+}
 
 export function TaskList() {
   const isWideVersion = useBreakpointValue({
@@ -55,9 +72,26 @@ export function TaskList() {
               Tarefas
             </Heading>
             <Flex justify="flex-end" gap={8}>
+              <Select
+                name="typeFilter"
+                id="typeFilter"
+                bg="gray.800"
+                color="gray.600"
+                w={200}
+                onChange={() => typeFilter()}
+              >
+                <option>Todos</option>
+                {types.map((type: any) => {
+                  return (
+                    <option value={type.description}>
+                      {type.description}
+                    </option>
+                  );
+                })}
+              </Select>
               <Button
                 as="a"
-                size="sm"
+                size="md"
                 fontSize="sm"
                 colorScheme="blue"
                 leftIcon={<Icon as={Plus} fontSize={16} />}
@@ -67,7 +101,7 @@ export function TaskList() {
               </Button>
               <Button
                 as="a"
-                size="sm"
+                size="md"
                 fontSize="sm"
                 colorScheme="green"
                 leftIcon={<Icon as={FilePdf} fontSize={16} />}
@@ -80,7 +114,7 @@ export function TaskList() {
             <SimpleGrid columns={4} spacing={100}>
               <Flex direction="column">
                 <Text
-                  bgColor="blue"
+                  bgColor="blue.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
@@ -89,21 +123,8 @@ export function TaskList() {
                   Pendente
                 </Text>
                 {tasks.map((task: any) => {
-                  let color = "";
+                  const color = cardColor(task.situation) || "";
                   const status = "pending";
-                  console.log(task.situation);
-                  if (task.situation == "done") {
-                    color = "green";
-                  }
-                  if (task.situation == "doing") {
-                    color = "orange";
-                  }
-                  if (task.situation == "pending") {
-                    color = "blue";
-                  }
-                  if (task.situation == "canceled") {
-                    color = "red";
-                  }
                   let typeName = "";
                   types.map((type: any) => {
                     if (type.id == task.TypeId) {
@@ -129,7 +150,7 @@ export function TaskList() {
               </Flex>
               <Flex direction="column">
                 <Text
-                  bgColor="orange"
+                  bgColor="yellow.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
@@ -138,21 +159,8 @@ export function TaskList() {
                   Fazendo
                 </Text>
                 {tasks.map((task: any) => {
-                  let color = "";
+                  const color = cardColor(task.situation) || "";
                   const status = "doing";
-                  console.log(task.situation);
-                  if (task.situation == "done") {
-                    color = "green";
-                  }
-                  if (task.situation == "doing") {
-                    color = "orange";
-                  }
-                  if (task.situation == "pending") {
-                    color = "blue";
-                  }
-                  if (task.situation == "canceled") {
-                    color = "red";
-                  }
                   let typeName = "";
                   types.map((type: any) => {
                     if (type.id == task.TypeId) {
@@ -179,7 +187,7 @@ export function TaskList() {
 
               <Flex direction="column">
                 <Text
-                  bgColor="green"
+                  bgColor="green.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
@@ -188,22 +196,8 @@ export function TaskList() {
                   Finalizado
                 </Text>
                 {tasks.map((task: any) => {
-                  let color = "";
+                  const color = cardColor(task.situation) || "";
                   const status = "done";
-                  console.log(task.situation);
-
-                  if (task.situation == "done") {
-                    color = "green";
-                  }
-                  if (task.situation == "doing") {
-                    color = "orange";
-                  }
-                  if (task.situation == "pending") {
-                    color = "blue";
-                  }
-                  if (task.situation == "canceled") {
-                    color = "red";
-                  }
                   let typeName = "";
                   types.map((type: any) => {
                     if (type.id == task.TypeId) {
@@ -229,7 +223,7 @@ export function TaskList() {
               </Flex>
               <Flex direction="column">
                 <Text
-                  bgColor="red"
+                  bgColor="red.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
@@ -238,21 +232,8 @@ export function TaskList() {
                   Cancelado
                 </Text>
                 {tasks.map((task: any) => {
-                  let color = "";
+                  const color = cardColor(task.situation) || "";
                   const status = "canceled";
-                  console.log(task.situation);
-                  if (task.situation == "done") {
-                    color = "green";
-                  }
-                  if (task.situation == "doing") {
-                    color = "orange";
-                  }
-                  if (task.situation == "pending") {
-                    color = "blue";
-                  }
-                  if (task.situation == "canceled") {
-                    color = "red";
-                  }
                   let typeName = "";
                   types.map((type: any) => {
                     if (type.id == task.TypeId) {
@@ -289,3 +270,21 @@ const formatDate = (date: string[]) => {
   date = date[0].split("-");
   return `${date[2]}/${date[1]}/${date[0]}`;
 };
+
+const typeFilter = () => {
+  const id = ((document.getElementById("typeFilter") as HTMLInputElement).value);
+  const arrayCards = document.querySelectorAll(".cardTask");
+  arrayCards.forEach((card: any) => {
+    let type = card.querySelector(" .cardTypes");
+    type = type.textContent.split(" ");
+    type = type[1];
+    if (type != id) {
+      card.style.display = "none";
+    } else {
+      card.style.display = "block";
+    }
+    if (id === "Todos") {
+      card.style.display = "block";
+    }
+  })
+}
