@@ -97,20 +97,20 @@ export function TaskList() {
                     typeName = type.description;
                   }
                 });
-
+                const createDate = task.create.split("T");
+                const expireDate = task.expire.split("T");
                 return (
                   <Task
                     color={color}
                     description={task.description}
                     type={typeName}
                     priority={task.priority}
-                    create={task.create}
-                    expire={task.expire}
+                    create={createDate[0]}
+                    expire={expireDate[0]}
                   />
                 );
               })}
             </SimpleGrid>
-            
           </Flex>
         </Box>
       </Flex>
