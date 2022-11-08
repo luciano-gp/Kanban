@@ -21,9 +21,16 @@ import axios from "axios";
 
 const dataTypes = await axios.get("http://localhost:3001/types");
 const types = dataTypes.data;
+let thisTask: any;
 
-export default function TaskEdit() {
+export default function TaskEdit(id?: number) {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  if (id) {
+    const task = async () => {
+      const data = await axios.get(`http://localhost:3001/tasks/${id}`);
+      thisTask = data.data;
+    }
+  }
   const TaskEditModal = useMemo(() => {
     return (
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
@@ -49,7 +56,7 @@ export default function TaskEdit() {
                         gap="8"
                       >
                         <GridItem colSpan={7}>
-                          <Input name="description" id="description" label="Descrição" />
+                          <Input name="description" id="description" label="Descrição"/>
                         </GridItem>
                         <GridItem colSpan={1}>
                           <label htmlFor="">Prioridade</label>

@@ -10,7 +10,8 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Envelope, PencilSimple, Tag, Trash } from "phosphor-react";
+import { Envelope, PencilSimple, Prohibit, Tag, Trash } from "phosphor-react";
+import useTaskEditModal from "../Modal/TaskEditModal";
 
 interface TaskProps {
   color: string;
@@ -35,6 +36,8 @@ export default function Task({
   if (color == "green") {
     isGreen = true;
   }
+  const isEdit = true;
+  const { onClose, onOpen, TaskEditModal } = useTaskEditModal(id);
   return (
     <Center py={6}>
       <Box
@@ -71,50 +74,57 @@ export default function Task({
             <Text color={"gray.500"}>Criação: {create}</Text>
             <Text color={"gray.500"}>Validade: {expire}</Text>
           </Box>
-          <SimpleGrid columns={2} row={2} spacing={2}>
+          <SimpleGrid columns={5} row={1} spacing={2}>
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="green"
-              leftIcon={<Icon as={Tag} fontSize={16} />}
               disabled={isGreen}
               onClick={() => {
                 endTask(id);
               }}
             >
-              Finalizar
+              {<Icon as={Tag} fontSize={16} />}
             </Button>
-
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="pink"
-              leftIcon={<Icon as={PencilSimple} fontSize={16} />}
+              onClick={onOpen}
             >
-              Editar
+              {<Icon as={PencilSimple} fontSize={16} />}
             </Button>
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="red"
-              leftIcon={<Icon as={Trash} fontSize={16} />}
               onClick={() => {
                 deleteTask(id);
               }}
             >
-              Excluir
+              {<Icon as={Trash} fontSize={16} />}
             </Button>
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="yellow"
-              leftIcon={<Icon as={Envelope} fontSize={16} />}
             >
-              E-mail
+              {<Icon as={Envelope} fontSize={16} />}
+            </Button>
+            <Button
+              size="sm"
+              fontSize="sm"
+              colorScheme="orange"
+              onClick={() => {
+                cancelTask(id);
+              }}
+            >
+              <Icon as={Prohibit} fontSize={16} />
             </Button>
           </SimpleGrid>
         </Box>
       </Box>
+      {TaskEditModal}
     </Center>
   );
 }
@@ -127,5 +137,12 @@ const endTask = (id: number) => {
   axios.put(`http://localhost:3001/tasks/`, {
     id: id,
     situation: 'done'
+  });
+};
+
+const cancelTask = (id: number) => {
+  axios.put(`http://localhost:3001/tasks/`, {
+    id: id,
+    situation: 'canceled'
   });
 };

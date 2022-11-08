@@ -12,7 +12,7 @@ import {
 import { Header } from "../components/Header";
 import { Plus, FilePdf } from "phosphor-react";
 import useTaskEditModal from "../components/Modal/TaskEditModal";
-import Task from "../components/card";
+import Task from "../components/Card";
 import axios from "axios";
 
 const data = await axios.get("http://localhost:3001/tasks");
@@ -55,48 +55,6 @@ export function TaskList() {
               Tarefas
             </Heading>
             <Flex justify="flex-end" gap={8}>
-              <Flex gap={2} mx="250">
-                <Text
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  bgColor="green"
-                  p="2"
-                  borderRadius={5}
-                >
-                  Concluido
-                </Text>
-                <Text
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  bgColor="orange"
-                  p="2"
-                  borderRadius={5}
-                >
-                  Fazendo
-                </Text>
-                <Text
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  bgColor="blue"
-                  p="2"
-                  borderRadius={5}
-                >
-                  Pendente
-                </Text>
-                <Text
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  bgColor="red"
-                  p="2"
-                  borderRadius={5}
-                >
-                  Cancelado
-                </Text>
-              </Flex>
               <Button
                 as="a"
                 size="sm"
@@ -144,8 +102,8 @@ export function TaskList() {
                       typeName = type.description;
                     }
                   });
-                  const createDate = task.create.split("T");
-                  const expireDate = task.expire.split("T");
+                  const createDate = formatDate(task.create.split("T"));
+                  const expireDate = formatDate(task.expire.split("T"));
                   if (status == task.situation) {
                     return (
                       <Task
@@ -153,8 +111,8 @@ export function TaskList() {
                         description={task.description}
                         type={typeName}
                         priority={task.priority}
-                        create={createDate[0]}
-                        expire={expireDate[0]}
+                        create={createDate}
+                        expire={expireDate}
                         id={task.id}
                       />
                     );
@@ -185,8 +143,8 @@ export function TaskList() {
                       typeName = type.description;
                     }
                   });
-                  const createDate = task.create.split("T");
-                  const expireDate = task.expire.split("T");
+                  const createDate = formatDate(task.create.split("T"));
+                  const expireDate = formatDate(task.expire.split("T"));
                   if (status == task.situation) {
                     return (
                       <Task
@@ -194,8 +152,8 @@ export function TaskList() {
                         description={task.description}
                         type={typeName}
                         priority={task.priority}
-                        create={createDate[0]}
-                        expire={expireDate[0]}
+                        create={createDate}
+                        expire={expireDate}
                         id={task.id}
                       />
                     );
@@ -228,8 +186,8 @@ export function TaskList() {
                       typeName = type.description;
                     }
                   });
-                  const createDate = task.create.split("T");
-                  const expireDate = task.expire.split("T");
+                  const createDate = formatDate(task.create.split("T"));
+                  const expireDate = formatDate(task.expire.split("T"));
                   if (status == task.situation) {
                     return (
                       <Task
@@ -237,8 +195,8 @@ export function TaskList() {
                         description={task.description}
                         type={typeName}
                         priority={task.priority}
-                        create={createDate[0]}
-                        expire={expireDate[0]}
+                        create={createDate}
+                        expire={expireDate}
                         id={task.id}
                       />
                     );
@@ -269,8 +227,8 @@ export function TaskList() {
                       typeName = type.description;
                     }
                   });
-                  const createDate = task.create.split("T");
-                  const expireDate = task.expire.split("T");
+                  const createDate = formatDate(task.create.split("T"));
+                  const expireDate = formatDate(task.expire.split("T"));
                   if (status == task.situation) {
                     return (
                       <Task
@@ -278,8 +236,8 @@ export function TaskList() {
                         description={task.description}
                         type={typeName}
                         priority={task.priority}
-                        create={createDate[0]}
-                        expire={expireDate[0]}
+                        create={createDate}
+                        expire={expireDate}
                         id={task.id}
                       />
                     );
@@ -295,5 +253,7 @@ export function TaskList() {
   );
 }
 
-{
+const formatDate = (date: string[]) => {
+  date = date[0].split("-");
+  return `${date[2]}/${date[1]}/${date[0]}`
 }
