@@ -78,6 +78,9 @@ export default function Task({
               colorScheme="green"
               leftIcon={<Icon as={Tag} fontSize={16} />}
               disabled={isGreen}
+              onClick={() => {
+                endTask(id);
+              }}
             >
               Finalizar
             </Button>
@@ -118,4 +121,11 @@ export default function Task({
 
 const deleteTask = (id: number) => {
   axios.delete(`http://localhost:3001/tasks/${id}`);
+};
+
+const endTask = (id: number) => {
+  axios.put(`http://localhost:3001/tasks/`, {
+    id: id,
+    situation: 'done'
+  });
 };
