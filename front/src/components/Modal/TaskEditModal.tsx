@@ -21,16 +21,9 @@ import axios from "axios";
 
 const dataTypes = await axios.get("http://localhost:3001/types");
 const types = dataTypes.data;
-let thisTask: any;
 
 export default function TaskEdit(id?: number) {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  if (id) {
-    const task = async () => {
-      const data = await axios.get(`http://localhost:3001/tasks/${id}`);
-      thisTask = data.data;
-    }
-  }
   const TaskEditModal = useMemo(() => {
     return (
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
@@ -56,7 +49,11 @@ export default function TaskEdit(id?: number) {
                         gap="8"
                       >
                         <GridItem colSpan={7}>
-                          <Input name="description" id="description" label="Descrição"/>
+                          <Input
+                            name="description"
+                            id="description"
+                            label="Descrição"
+                          />
                         </GridItem>
                         <GridItem colSpan={1}>
                           <label htmlFor="">Prioridade</label>
@@ -140,10 +137,7 @@ export default function TaskEdit(id?: number) {
                         Cancelar
                       </Button>
                     </Link>
-                    <Button
-                      colorScheme="blue"
-                      onClick={submit}
-                    >
+                    <Button colorScheme="blue" onClick={submit}>
                       Salvar
                     </Button>
                   </Flex>
@@ -165,15 +159,17 @@ export default function TaskEdit(id?: number) {
 
 const submit = async () => {
   try {
-    await axios.post('http://localhost:3001/tasks', {
-      description: (document.getElementById('description') as HTMLInputElement).value,
-      priority: (document.getElementById('priority') as HTMLInputElement).value,
-      situation: (document.getElementById('situation') as HTMLInputElement).value,
-      TypeId: (document.getElementById('type') as HTMLInputElement).value,
-      create: (document.getElementById('create') as HTMLInputElement).value,
-      expire: (document.getElementById('expire') as HTMLInputElement).value
+    await axios.post("http://localhost:3001/tasks", {
+      description: (document.getElementById("description") as HTMLInputElement)
+        .value,
+      priority: (document.getElementById("priority") as HTMLInputElement).value,
+      situation: (document.getElementById("situation") as HTMLInputElement)
+        .value,
+      TypeId: (document.getElementById("type") as HTMLInputElement).value,
+      create: (document.getElementById("create") as HTMLInputElement).value,
+      expire: (document.getElementById("expire") as HTMLInputElement).value,
     });
   } catch (err) {
     alert("Error creating");
   }
-}
+};

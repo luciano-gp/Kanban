@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Envelope, PencilSimple, Prohibit, Tag, Trash } from "phosphor-react";
-import useTaskEditModal from "../Modal/TaskEditModal";
 
 interface TaskProps {
   color: string;
@@ -33,11 +32,13 @@ export default function Task({
   id,
 }: TaskProps) {
   let isGreen: any;
+  let isRed: any;
   if (color == "green") {
     isGreen = true;
   }
-  const isEdit = true;
-  const { onClose, onOpen, TaskEditModal } = useTaskEditModal(id);
+  if (color == "red") {
+    isRed = true;
+  }
   return (
     <Center py={6}>
       <Box
@@ -86,12 +87,7 @@ export default function Task({
             >
               {<Icon as={Tag} fontSize={16} />}
             </Button>
-            <Button
-              size="sm"
-              fontSize="sm"
-              colorScheme="pink"
-              onClick={onOpen}
-            >
+            <Button size="sm" fontSize="sm" colorScheme="pink">
               {<Icon as={PencilSimple} fontSize={16} />}
             </Button>
             <Button
@@ -104,17 +100,14 @@ export default function Task({
             >
               {<Icon as={Trash} fontSize={16} />}
             </Button>
-            <Button
-              size="sm"
-              fontSize="sm"
-              colorScheme="yellow"
-            >
+            <Button size="sm" fontSize="sm" colorScheme="yellow">
               {<Icon as={Envelope} fontSize={16} />}
             </Button>
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="orange"
+              disabled={isRed}
               onClick={() => {
                 cancelTask(id);
               }}
@@ -124,7 +117,6 @@ export default function Task({
           </SimpleGrid>
         </Box>
       </Box>
-      {TaskEditModal}
     </Center>
   );
 }
@@ -136,13 +128,13 @@ const deleteTask = (id: number) => {
 const endTask = (id: number) => {
   axios.put(`http://localhost:3001/tasks/`, {
     id: id,
-    situation: 'done'
+    situation: "done",
   });
 };
 
 const cancelTask = (id: number) => {
   axios.put(`http://localhost:3001/tasks/`, {
     id: id,
-    situation: 'canceled'
+    situation: "canceled",
   });
 };

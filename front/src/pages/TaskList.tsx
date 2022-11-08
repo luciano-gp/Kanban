@@ -79,7 +79,15 @@ export function TaskList() {
           <Flex>
             <SimpleGrid columns={4} spacing={100}>
               <Flex direction="column">
-                Pendente
+                <Text
+                  bgColor="blue"
+                  p="2"
+                  borderRadius="5"
+                  textAlign="center"
+                  fontWeight="bold"
+                >
+                  Pendente
+                </Text>
                 {tasks.map((task: any) => {
                   let color = "";
                   const status = "pending";
@@ -120,7 +128,15 @@ export function TaskList() {
                 })}
               </Flex>
               <Flex direction="column">
-                Fazendo
+                <Text
+                  bgColor="orange"
+                  p="2"
+                  borderRadius="5"
+                  textAlign="center"
+                  fontWeight="bold"
+                >
+                  Fazendo
+                </Text>
                 {tasks.map((task: any) => {
                   let color = "";
                   const status = "doing";
@@ -162,7 +178,15 @@ export function TaskList() {
               </Flex>
 
               <Flex direction="column">
-                Finalizado
+                <Text
+                  bgColor="green"
+                  p="2"
+                  borderRadius="5"
+                  textAlign="center"
+                  fontWeight="bold"
+                >
+                  Finalizado
+                </Text>
                 {tasks.map((task: any) => {
                   let color = "";
                   const status = "done";
@@ -204,7 +228,15 @@ export function TaskList() {
                 })}
               </Flex>
               <Flex direction="column">
-                Cancelado
+                <Text
+                  bgColor="red"
+                  p="2"
+                  borderRadius="5"
+                  textAlign="center"
+                  fontWeight="bold"
+                >
+                  Cancelado
+                </Text>
                 {tasks.map((task: any) => {
                   let color = "";
                   const status = "canceled";
@@ -255,5 +287,5 @@ export function TaskList() {
 
 const formatDate = (date: string[]) => {
   date = date[0].split("-");
-  return `${date[2]}/${date[1]}/${date[0]}`
-}
+  return `${date[2]}/${date[1]}/${date[0]}`;
+};
