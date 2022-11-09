@@ -8,6 +8,7 @@ import {
   useColorModeValue,
   Icon,
   SimpleGrid,
+  Flex,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Envelope, PencilSimple, Prohibit, Tag, Trash } from "phosphor-react";
@@ -52,37 +53,38 @@ export default function Task({
         <Box h="10" w={"full"} bgColor={color} objectFit={"cover"} />
 
         <Box px={4} py={2}>
-          <Stack spacing={0} align={"left"} mb={5}>
-            <Heading></Heading>
-            <Text fontSize="14" color={"gray.300"} className="cardTypes">
-              Tipo: {type}
-            </Text>
-            <Text fontSize="14" color={"gray.300"}>
-              Prioridade: {priority}
-            </Text>
-          </Stack>
-
           <Stack direction={"row"} justify={"center"} spacing={6}>
             <Stack spacing={0} align={"center"}>
               <Text
                 color={"gray.200"}
-                mb="10"
+                mb="2"
                 fontSize={"2xl"}
                 fontWeight={500}
                 fontFamily={"body"}
+                textAlign="center"
               >
                 {description}
               </Text>
             </Stack>
           </Stack>
-          <Box pb={1}>
-            <Text fontSize="12" color={"gray.300"}>
-              Criação: {create}
-            </Text>
-            <Text fontSize="12" color={"gray.300"}>
-              Validade: {expire}
-            </Text>
-          </Box>
+          <Flex pb={1} mb="2">
+            <Stack spacing={0} mx="auto">
+              <Text fontSize="12" color={"gray.300"} className="cardTypes">
+                Tipo: {type}
+              </Text>
+              <Text fontSize="12" color={"gray.300"}>
+                Prioridade: {priority}
+              </Text>
+            </Stack>
+            <Stack spacing={0} align={"left"} mx="auto">
+              <Text fontSize="12" color={"gray.300"}>
+                Criação: {create}
+              </Text>
+              <Text fontSize="12" color={"gray.300"}>
+                Validade: {expire}
+              </Text>
+            </Stack>
+          </Flex>
           <SimpleGrid columns={5} row={1} spacing={2}>
             <Button
               size="sm"
