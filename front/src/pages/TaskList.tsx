@@ -36,7 +36,7 @@ const cardColor = (task: string) => {
   if (task == "canceled") {
     return "red.700";
   }
-}
+};
 
 export function TaskList() {
   const isWideVersion = useBreakpointValue({
@@ -83,9 +83,7 @@ export function TaskList() {
                 <option>Todos</option>
                 {types.map((type: any) => {
                   return (
-                    <option value={type.description}>
-                      {type.description}
-                    </option>
+                    <option value={type.description}>{type.description}</option>
                   );
                 })}
               </Select>
@@ -112,150 +110,209 @@ export function TaskList() {
           </Flex>
           <Flex>
             <SimpleGrid columns={4} spacing={100}>
-              <Flex direction="column">
+              <Flex direction="column" h="700">
                 <Text
                   bgColor="blue.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
                   fontWeight="bold"
+                  mb="2"
                 >
                   Pendente
                 </Text>
-                {tasks.map((task: any) => {
-                  const color = cardColor(task.situation) || "";
-                  const status = "pending";
-                  let typeName = "";
-                  types.map((type: any) => {
-                    if (type.id == task.TypeId) {
-                      typeName = type.description;
+                <Flex
+                  direction="column"
+                  h="700"
+                  overflowY="scroll"
+                  css={{
+                    "&::-webkit-scrollbar": {
+                      width: "4px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      width: "6px",
+                    },
+                  }}
+                >
+                  {tasks.map((task: any) => {
+                    const color = cardColor(task.situation) || "";
+                    const status = "pending";
+                    let typeName = "";
+                    types.map((type: any) => {
+                      if (type.id == task.TypeId) {
+                        typeName = type.description;
+                      }
+                    });
+                    const createDate = formatDate(task.create.split("T"));
+                    const expireDate = formatDate(task.expire.split("T"));
+                    if (status == task.situation) {
+                      return (
+                        <Task
+                          color={color}
+                          description={task.description}
+                          type={typeName}
+                          priority={task.priority}
+                          create={createDate}
+                          expire={expireDate}
+                          id={task.id}
+                        />
+                      );
                     }
-                  });
-                  const createDate = formatDate(task.create.split("T"));
-                  const expireDate = formatDate(task.expire.split("T"));
-                  if (status == task.situation) {
-                    return (
-                      <Task
-                        color={color}
-                        description={task.description}
-                        type={typeName}
-                        priority={task.priority}
-                        create={createDate}
-                        expire={expireDate}
-                        id={task.id}
-                      />
-                    );
-                  }
-                })}
+                  })}
+                </Flex>
               </Flex>
-              <Flex direction="column">
+              <Flex direction="column" h="700">
                 <Text
                   bgColor="yellow.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
                   fontWeight="bold"
+                  mb="2"
                 >
-                  Fazendo
+                  Pendente
                 </Text>
-                {tasks.map((task: any) => {
-                  const color = cardColor(task.situation) || "";
-                  const status = "doing";
-                  let typeName = "";
-                  types.map((type: any) => {
-                    if (type.id == task.TypeId) {
-                      typeName = type.description;
+                <Flex
+                  direction="column"
+                  h="700"
+                  overflowY="scroll"
+                  css={{
+                    "&::-webkit-scrollbar": {
+                      width: "4px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      width: "6px",
+                    },
+                  }}
+                >
+                  {tasks.map((task: any) => {
+                    const color = cardColor(task.situation) || "";
+                    const status = "doing";
+                    let typeName = "";
+                    types.map((type: any) => {
+                      if (type.id == task.TypeId) {
+                        typeName = type.description;
+                      }
+                    });
+                    const createDate = formatDate(task.create.split("T"));
+                    const expireDate = formatDate(task.expire.split("T"));
+                    if (status == task.situation) {
+                      return (
+                        <Task
+                          color={color}
+                          description={task.description}
+                          type={typeName}
+                          priority={task.priority}
+                          create={createDate}
+                          expire={expireDate}
+                          id={task.id}
+                        />
+                      );
                     }
-                  });
-                  const createDate = formatDate(task.create.split("T"));
-                  const expireDate = formatDate(task.expire.split("T"));
-                  if (status == task.situation) {
-                    return (
-                      <Task
-                        color={color}
-                        description={task.description}
-                        type={typeName}
-                        priority={task.priority}
-                        create={createDate}
-                        expire={expireDate}
-                        id={task.id}
-                      />
-                    );
-                  }
-                })}
+                  })}
+                </Flex>
               </Flex>
-
-              <Flex direction="column">
+              <Flex direction="column" h="700">
                 <Text
                   bgColor="green.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
                   fontWeight="bold"
+                  mb="2"
                 >
                   Finalizado
                 </Text>
-                {tasks.map((task: any) => {
-                  const color = cardColor(task.situation) || "";
-                  const status = "done";
-                  let typeName = "";
-                  types.map((type: any) => {
-                    if (type.id == task.TypeId) {
-                      typeName = type.description;
+                <Flex
+                  direction="column"
+                  h="700"
+                  overflowY="scroll"
+                  css={{
+                    "&::-webkit-scrollbar": {
+                      width: "4px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      width: "6px",
+                    },
+                  }}
+                >
+                  {tasks.map((task: any) => {
+                    const color = cardColor(task.situation) || "";
+                    const status = "done";
+                    let typeName = "";
+                    types.map((type: any) => {
+                      if (type.id == task.TypeId) {
+                        typeName = type.description;
+                      }
+                    });
+                    const createDate = formatDate(task.create.split("T"));
+                    const expireDate = formatDate(task.expire.split("T"));
+                    if (status == task.situation) {
+                      return (
+                        <Task
+                          color={color}
+                          description={task.description}
+                          type={typeName}
+                          priority={task.priority}
+                          create={createDate}
+                          expire={expireDate}
+                          id={task.id}
+                        />
+                      );
                     }
-                  });
-                  const createDate = formatDate(task.create.split("T"));
-                  const expireDate = formatDate(task.expire.split("T"));
-                  if (status == task.situation) {
-                    return (
-                      <Task
-                        color={color}
-                        description={task.description}
-                        type={typeName}
-                        priority={task.priority}
-                        create={createDate}
-                        expire={expireDate}
-                        id={task.id}
-                      />
-                    );
-                  }
-                })}
+                  })}
+                </Flex>
               </Flex>
-              <Flex direction="column">
+              <Flex direction="column" h="700">
                 <Text
                   bgColor="red.700"
                   p="2"
                   borderRadius="5"
                   textAlign="center"
                   fontWeight="bold"
+                  mb="2"
                 >
                   Cancelado
                 </Text>
-                {tasks.map((task: any) => {
-                  const color = cardColor(task.situation) || "";
-                  const status = "canceled";
-                  let typeName = "";
-                  types.map((type: any) => {
-                    if (type.id == task.TypeId) {
-                      typeName = type.description;
+                <Flex
+                  direction="column"
+                  h="700"
+                  overflowY="scroll"
+                  css={{
+                    "&::-webkit-scrollbar": {
+                      width: "4px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                      width: "6px",
+                    },
+                  }}
+                >
+                  {tasks.map((task: any) => {
+                    const color = cardColor(task.situation) || "";
+                    const status = "canceled";
+                    let typeName = "";
+                    types.map((type: any) => {
+                      if (type.id == task.TypeId) {
+                        typeName = type.description;
+                      }
+                    });
+                    const createDate = formatDate(task.create.split("T"));
+                    const expireDate = formatDate(task.expire.split("T"));
+                    if (status == task.situation) {
+                      return (
+                        <Task
+                          color={color}
+                          description={task.description}
+                          type={typeName}
+                          priority={task.priority}
+                          create={createDate}
+                          expire={expireDate}
+                          id={task.id}
+                        />
+                      );
                     }
-                  });
-                  const createDate = formatDate(task.create.split("T"));
-                  const expireDate = formatDate(task.expire.split("T"));
-                  if (status == task.situation) {
-                    return (
-                      <Task
-                        color={color}
-                        description={task.description}
-                        type={typeName}
-                        priority={task.priority}
-                        create={createDate}
-                        expire={expireDate}
-                        id={task.id}
-                      />
-                    );
-                  }
-                })}
+                  })}
+                </Flex>
               </Flex>
             </SimpleGrid>
           </Flex>
@@ -272,7 +329,7 @@ const formatDate = (date: string[]) => {
 };
 
 const typeFilter = () => {
-  const id = ((document.getElementById("typeFilter") as HTMLInputElement).value);
+  const id = (document.getElementById("typeFilter") as HTMLInputElement).value;
   const arrayCards = document.querySelectorAll(".cardTask");
   arrayCards.forEach((card: any) => {
     let type = card.querySelector(" .cardTypes");
@@ -286,5 +343,5 @@ const typeFilter = () => {
     if (id === "Todos") {
       card.style.display = "block";
     }
-  })
-}
+  });
+};

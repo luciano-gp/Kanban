@@ -24,6 +24,7 @@ const types = dataTypes.data;
 
 export default function TaskEdit(id?: number) {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const optionsPriority = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const TaskEditModal = useMemo(() => {
     return (
       <Modal isOpen={isOpen} onClose={onClose} size="4xl">
@@ -61,22 +62,19 @@ export default function TaskEdit(id?: number) {
                             name="priority"
                             id="priority"
                             bg="gray.800"
-                            color="gray.600"
+                            color="gray.40"
                             mt="3"
                           >
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5" selected>
-                              5
-                            </option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
+                            {optionsPriority.map((option: any) => {
+                              return (
+                                <option
+                                  value={option}
+                                  style={{ background: "#181b23" }}
+                                >
+                                  {option}
+                                </option>
+                              );
+                            })}
                           </Select>
                         </GridItem>
                         <GridItem colSpan={2}>
@@ -85,13 +83,33 @@ export default function TaskEdit(id?: number) {
                             name="situation"
                             id="situation"
                             bg="gray.800"
-                            color="gray.600"
+                            color="gray.40"
                             mt="3"
                           >
-                            <option value="pending">Pendente</option>
-                            <option value="doing">Fazendo</option>
-                            <option value="done">Concluído</option>
-                            <option value="canceled">Cancelado</option>
+                            <option
+                              value="pending"
+                              style={{ background: "#181b23" }}
+                            >
+                              Pendente
+                            </option>
+                            <option
+                              value="doing"
+                              style={{ background: "#181b23" }}
+                            >
+                              Fazendo
+                            </option>
+                            <option
+                              value="done"
+                              style={{ background: "#181b23" }}
+                            >
+                              Concluído
+                            </option>
+                            <option
+                              value="canceled"
+                              style={{ background: "#181b23" }}
+                            >
+                              Cancelado
+                            </option>
                           </Select>
                         </GridItem>
                         <GridItem colSpan={2}>
@@ -100,12 +118,15 @@ export default function TaskEdit(id?: number) {
                             name="type"
                             id="type"
                             bg="gray.800"
-                            color="gray.600"
+                            color="gray.40"
                             mt="3"
                           >
                             {types.map((type: any) => {
                               return (
-                                <option value={type.id}>
+                                <option
+                                  value={type.id}
+                                  style={{ background: "#181b23" }}
+                                >
                                   {type.description}
                                 </option>
                               );
@@ -152,13 +173,15 @@ export default function TaskEdit(id?: number) {
 const submit = async () => {
   try {
     const data = {
-      description: (document.getElementById("description") as HTMLInputElement).value,
+      description: (document.getElementById("description") as HTMLInputElement)
+        .value,
       priority: (document.getElementById("priority") as HTMLInputElement).value,
-      situation: (document.getElementById("situation") as HTMLInputElement).value,
+      situation: (document.getElementById("situation") as HTMLInputElement)
+        .value,
       TypeId: (document.getElementById("type") as HTMLInputElement).value,
       create: new Date(),
       expire: (document.getElementById("expire") as HTMLInputElement).value,
-    }
+    };
     console.log(data);
     await axios.post("http://localhost:3001/tasks", data);
   } catch (err) {
