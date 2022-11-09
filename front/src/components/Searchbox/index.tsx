@@ -24,7 +24,7 @@ export function SearchBox() {
         _placeholder={{ color: "gray.50" }}
         variant="unstyled"
         id="searchbox"
-        onKeyDown={() => nameFilter()}
+        onKeyUp={() => nameFilter()}
       />
       <Icon as={MagnifyingGlass} fontSize={20} id="test" />
     </Flex>
@@ -32,17 +32,15 @@ export function SearchBox() {
 }
 
 const nameFilter = () => {
-  let description = (document.getElementById("searchbox") as HTMLInputElement)
-    .value;
+  let description = (
+    document.getElementById("searchbox") as HTMLInputElement
+  ).value.toLowerCase();
   const arrayCards = document.querySelectorAll(".cardTask");
   arrayCards.forEach((card: any) => {
     let descriptionCard = card.querySelector(".cardDescription");
-    descriptionCard = descriptionCard.textContent.split(">");
-    descriptionCard[0] = descriptionCard[0].toLowerCase();
-    if (!descriptionCard[0].match(description.toLowerCase())) {
-      card.style.display = "none";
-    } else {
-      card.style.display = "block";
-    }
+    descriptionCard = descriptionCard.textContent.split(">")[0].toLowerCase();
+    !descriptionCard.match(description)
+      ? (card.style.display = "none")
+      : (card.style.display = "block");
   });
 };
