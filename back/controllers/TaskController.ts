@@ -8,8 +8,8 @@ class TaskController {
     const limit: number = parseInt(params.limit as string) || 100;
     const page: number = parseInt(params.page as string) || 1;
     const offset: number = (page - 1) * limit;
-    const sort: any = params.sort || 'id';
-    const order: any = params.order || 'ASC';
+    const sort: any = 'expire';
+    const order: any = 'ASC';
     const where: any = {};
 
     const tasks = await TaskModel.findAll({
@@ -18,6 +18,7 @@ class TaskController {
       offset: offset,
       order: [[sort, order]]
     });
+
     res.json(tasks);
   }
 
