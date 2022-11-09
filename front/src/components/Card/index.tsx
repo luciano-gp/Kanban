@@ -1,5 +1,4 @@
 import {
-  Heading,
   Box,
   Center,
   Text,
@@ -62,6 +61,7 @@ export default function Task({
                 fontWeight={500}
                 fontFamily={"body"}
                 textAlign="center"
+                className="cardDescription"
               >
                 {description}
               </Text>

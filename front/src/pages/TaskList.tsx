@@ -9,13 +9,13 @@ import {
   SimpleGrid,
   Text,
   Select,
-  filter,
 } from "@chakra-ui/react";
 import { Header } from "../components/Header";
 import { Plus, FilePdf } from "phosphor-react";
 import useTaskEditModal from "../components/Modal/TaskEditModal";
 import Task from "../components/Card";
 import axios from "axios";
+import { SearchBox } from "../components/Searchbox";
 
 const data = await axios.get("http://localhost:3001/tasks");
 const tasks = data.data;
@@ -68,22 +68,30 @@ export function TaskList() {
           }}
         >
           <Flex mb="8" justify="space-between" align="center">
-            <Heading size="lg" fontWeight="normal">
-              Tarefas
-            </Heading>
+            <Flex direction="row">
+              <Heading size="lg" fontWeight="normal" mr="8">
+                Tarefas
+              </Heading>
+              <SearchBox />
+            </Flex>
             <Flex justify="flex-end" gap={8}>
               <Select
                 name="typeFilter"
                 id="typeFilter"
                 bg="gray.800"
-                color="gray.600"
+                color="gray.50"
                 w={200}
                 onChange={() => typeFilter()}
               >
-                <option>Todos</option>
+                <option style={{ background: "#181b23" }}>Todos</option>
                 {types.map((type: any) => {
                   return (
-                    <option value={type.description}>{type.description}</option>
+                    <option
+                      value={type.description}
+                      style={{ background: "#181b23" }}
+                    >
+                      {type.description}
+                    </option>
                   );
                 })}
               </Select>
@@ -110,7 +118,7 @@ export function TaskList() {
           </Flex>
           <Flex>
             <SimpleGrid columns={4} spacing={100}>
-              <Flex direction="column" h="700">
+              <Flex direction="column" h="700" w={270}>
                 <Text
                   bgColor="blue.700"
                   p="2"
@@ -161,7 +169,7 @@ export function TaskList() {
                   })}
                 </Flex>
               </Flex>
-              <Flex direction="column" h="700">
+              <Flex direction="column" h="700" w={270}>
                 <Text
                   bgColor="yellow.700"
                   p="2"
@@ -170,7 +178,7 @@ export function TaskList() {
                   fontWeight="bold"
                   mb="2"
                 >
-                  Pendente
+                  Fazendo
                 </Text>
                 <Flex
                   direction="column"
@@ -212,7 +220,7 @@ export function TaskList() {
                   })}
                 </Flex>
               </Flex>
-              <Flex direction="column" h="700">
+              <Flex direction="column" h="700" w={270}>
                 <Text
                   bgColor="green.700"
                   p="2"
@@ -263,7 +271,7 @@ export function TaskList() {
                   })}
                 </Flex>
               </Flex>
-              <Flex direction="column" h="700">
+              <Flex direction="column" h="700" w={270}>
                 <Text
                   bgColor="red.700"
                   p="2"
@@ -333,6 +341,7 @@ const typeFilter = () => {
   const arrayCards = document.querySelectorAll(".cardTask");
   arrayCards.forEach((card: any) => {
     let type = card.querySelector(" .cardTypes");
+    console.log(type);
     type = type.textContent.split(" ");
     type = type[1];
     if (type != id) {

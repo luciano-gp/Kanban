@@ -4,7 +4,7 @@ import { TaskList } from "./pages/TaskList";
 export function Router() {
   return (
     <Routes>
-      <Route path="/tasks" element={<TaskList />} />
+      <Route path="/" element={<TaskList />} />
     </Routes>
   );
 }
